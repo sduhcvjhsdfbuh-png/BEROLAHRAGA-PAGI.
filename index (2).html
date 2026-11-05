@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Si Lincah: Hebat Berolahraga (7 KAIH)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e8f6ee;--card:#fff;--ink:#12372a;--mute:#4d6b5f;--pri:#1f9d55;--acc:#ff8a1f;--line:#bfe3cf;--bad:#d9433b;--shadow:#1f9d5533;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f2219;--card:#173226;--ink:#e9f7ef;--mute:#9bbfae;--pri:#3ac779;--acc:#ffa04a;--line:#2a4d3b;--bad:#ff7a70;--shadow:#00000055}}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Baloo 2",system-ui,sans-serif;font-weight:500;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+.screen{display:none;max-width:520px;margin:0 auto;padding:14px 16px 24px;min-height:100%}
+.screen.on{display:flex;flex-direction:column;gap:12px}
+h1{font-size:2.1rem;line-height:1.05;margin:0;font-weight:800}
+h2{margin:0;font-size:1.3rem;font-weight:800}
+p{margin:0;line-height:1.4;color:var(--mute)}
+.hero{font-size:4rem;text-align:center;margin-top:8px}
+.btn{font:inherit;font-weight:800;font-size:1.1rem;border:0;border-radius:16px;padding:12px 18px;background:var(--pri);color:#fff;box-shadow:0 4px 0 var(--shadow);cursor:pointer}
+.btn:active{transform:translateY(2px)}
+.btn.alt{background:var(--card);color:var(--ink);border:2px solid var(--line)}
+.btn.big{font-size:1.4rem;padding:16px}
+.btn:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.top{display:flex;align-items:center;gap:10px}
+.back{font:inherit;font-weight:800;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+.back:focus-visible{outline:3px solid var(--acc)}
+.top .t{flex:1;text-align:right;font-weight:800}
+.list{display:flex;flex-direction:column;gap:8px}
+.list .btn{display:flex;justify-content:space-between;align-items:center;text-align:left}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:14px}
+.bar{height:16px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .1s}
+.track{position:relative;height:56px;border-bottom:4px dashed var(--line)}
+.runner{position:absolute;bottom:2px;left:0;font-size:2.2rem;transition:left .1s;transform:scaleX(-1)}
+.pads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto}
+.pads .btn{height:110px;font-size:1.6rem}
+.pads .btn.next{background:var(--acc);box-shadow:0 4px 0 #b3590022}
+.big-n{font-size:3rem;font-weight:800;text-align:center;line-height:1}
+.field{position:relative;flex:1;min-height:340px;border-radius:18px;background:var(--card);border:2px solid var(--line);overflow:hidden;touch-action:none}
+.item{position:absolute;font-size:2rem;will-change:transform}
+.basket{position:absolute;bottom:6px;font-size:2.6rem}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt.ok{background:var(--pri);color:#fff;border-color:var(--pri)}
+.opt.no{background:var(--bad);color:#fff;border-color:var(--bad)}
+.stars{font-size:3rem;text-align:center;letter-spacing:6px}
+.msg{text-align:center;color:var(--ink);font-weight:700}
+.row{display:flex;gap:10px}.row .btn{flex:1}
+</style>
+</head>
+<body>
+
+<section id="menu" class="screen on">
+  <div class="hero">🏃‍♂️</div>
+  <h1>Si Lincah: Hebat Berolahraga</h1>
+  <p>Kebiasaan ke-3 dari 7 Kebiasaan Anak Indonesia Hebat (7 KAIH): berolahraga. Selesaikan 3 tantangan dan kumpulkan bintang!</p>
+  <div class="list">
+    <button class="btn alt" data-go="1"><span>⚡ Tantangan 1: Lari cepat</span><span class="st" id="s1"></span></button>
+    <button class="btn alt" data-go="2"><span>🍎 Tantangan 2: Tangkap yang sehat</span><span class="st" id="s2"></span></button>
+    <button class="btn alt" data-go="3"><span>🧠 Tantangan 3: Kuis olahraga</span><span class="st" id="s3"></span></button>
+  </div>
+  <button class="btn big" id="start">Mulai Main!</button>
+  <p class="msg" id="total"></p>
+</section>
+
+<section id="g1" class="screen">
+  <div class="top"><button class="back" data-back>← Kembali</button><span class="t">Lari cepat</span></div>
+  <p>Ketuk Kiri dan Kanan bergantian secepat mungkin selama 10 detik!</p>
+  <div class="card"><div class="row" style="justify-content:space-between"><b>Waktu: <span id="g1t">10</span></b><b>Langkah: <span id="g1n">0</span></b></div>
+  <div class="bar" style="margin-top:8px"><i id="g1bar"></i></div></div>
+  <div class="track"><span class="runner" id="runner">🏃</span></div>
+  <p class="msg" id="g1hint">Ketuk tombol pertama untuk mulai</p>
+  <div class="pads"><button class="btn big" id="pl">Kiri</button><button class="btn big" id="pr">Kanan</button></div>
+</section>
+
+<section id="g2" class="screen">
+  <div class="top"><button class="back" data-back>← Kembali</button><span class="t">Tangkap yang sehat</span></div>
+  <p>Geser keranjang untuk menangkap 🍎💧👟🥦. Hindari 🍟🍬🥤!</p>
+  <div class="row" style="justify-content:space-between"><b>Waktu: <span id="g2t">25</span></b><b>Skor: <span id="g2s">0</span></b></div>
+  <div class="field" id="field"><span class="basket" id="basket">🧺</span></div>
+  <div class="row"><button class="btn alt" id="bl">◀ Kiri</button><button class="btn alt" id="br">Kanan ▶</button></div>
+</section>
+
+<section id="g3" class="screen">
+  <div class="top"><button class="back" data-back>← Kembali</button><span class="t">Kuis olahraga</span></div>
+  <div class="bar"><i id="g3bar"></i></div>
+  <div class="card"><h2 id="q"></h2></div>
+  <div class="opts" id="opts"></div>
+  <p class="msg" id="fb"></p>
+  <button class="btn" id="nextq" style="display:none">Lanjut</button>
+</section>
+
+<section id="res" class="screen">
+  <div class="top"><button class="back" data-back>← Menu</button></div>
+  <h1 id="rt" style="text-align:center"></h1>
+  <div class="stars" id="rs"></div>
+  <p class="msg" id="rm"></p>
+  <div class="row" style="margin-top:auto"><button class="btn alt" id="again">Main lagi</button><button class="btn" id="cont">Lanjut</button></div>
+</section>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var stars={1:0,2:0,3:0},seq=false,cur=0,raf=0,timers=[],cleanup=function(){};
+function show(id){document.querySelectorAll(".screen").forEach(function(s){s.classList.toggle("on",s.id===id)});window.scrollTo(0,0)}
+function stop(){cancelAnimationFrame(raf);timers.forEach(clearInterval);timers=[];cleanup();cleanup=function(){}}
+function menu(){stop();seq=false;for(var i=1;i<=3;i++)$("s"+i).textContent=stars[i]?"⭐".repeat(stars[i]):"";
+  var t=stars[1]+stars[2]+stars[3];$("total").textContent=t?"Total bintang: "+t+" dari 9":"";show("menu")}
+function go(n){stop();cur=n;[null,g1,g2,g3][n]()}
+document.querySelectorAll("[data-back]").forEach(function(b){b.onclick=menu});
+document.querySelectorAll("[data-go]").forEach(function(b){b.onclick=function(){seq=false;go(+b.dataset.go)}});
+$("start").onclick=function(){seq=true;go(1)};
+
+function finish(n,s,msg){stop();stars[n]=Math.max(stars[n],s);
+  $("rt").textContent=["","Lari selesai!","Tangkapan selesai!","Kuis selesai!"][n];
+  $("rs").textContent="⭐".repeat(s)+"☆".repeat(3-s);$("rm").textContent=msg;
+  var last=!seq||n===3;$("cont").textContent=seq&&n<3?"Lanjut":"Ke menu";
+  $("cont").onclick=function(){seq&&n<3?go(n+1):menu()};
+  $("again").onclick=function(){go(n)};show("res");
+  if(seq&&n===3){var t=stars[1]+stars[2]+stars[3];$("rm").textContent=msg+" Total bintangmu: "+t+" dari 9. Hebat, tetap rajin berolahraga ya!"}}
+
+/* Tantangan 1 */
+function g1(){var steps=0,last="",left=10,started=false,goal=40;
+  $("g1t").textContent=left;$("g1n").textContent=0;$("g1bar").style.width="0";$("runner").style.left="0";$("g1hint").textContent="Ketuk tombol pertama untuk mulai";
+  $("pl").className="btn big";$("pr").className="btn big";show("g1");
+  function tap(side,o){if(left<=0)return;
+    if(!started){started=true;var t=setInterval(function(){left--;$("g1t").textContent=left;if(left<=0){clearInterval(t);end()}},1000);timers.push(t)}
+    if(side===last){$("g1hint").textContent="Bergantian ya! Kiri lalu Kanan";return}
+    last=side;steps++;$("g1n").textContent=steps;$("g1hint").textContent="Ayo terus!";
+    var p=Math.min(1,steps/goal);$("g1bar").style.width=p*100+"%";$("runner").style.left="calc("+p*100+"% - "+p*44+"px)";
+    $("pl").className="btn big"+(side==="L"?"":" next");$("pr").className="btn big"+(side==="R"?"":" next")}
+  function end(){var s=steps>=30?3:steps>=20?2:1;finish(1,s,"Kamu melangkah "+steps+" kali dalam 10 detik.")}
+  $("pl").onclick=function(){tap("L")};$("pr").onclick=function(){tap("R")}}
+
+/* Tantangan 2 */
+function g2(){var good=["🍎","💧","👟","🥦"],bad=["🍟","🍬","🥤"],items=[],score=0,left=25,bx=.5,keys={},f=$("field"),bk=$("basket");
+  f.querySelectorAll(".item").forEach(function(e){e.remove()});$("g2s").textContent=0;$("g2t").textContent=left;show("g2");
+  var W=f.clientWidth,H=f.clientHeight,last=performance.now(),spawn=0;
+  function place(){bk.style.left=(bx*(W-44))+"px"}place();
+  var t=setInterval(function(){left--;$("g2t").textContent=left;if(left<=0)end()},1000);timers.push(t);
+  function end(){stop();var s=score>=12?3:score>=7?2:1;finish(2,s,"Skor akhirmu "+score+".")}
+  function frame(now){var dt=Math.min(.05,(now-last)/1000);last=now;
+    if(keys.L)bx=Math.max(0,bx-dt*1.1);if(keys.R)bx=Math.min(1,bx+dt*1.1);place();
+    spawn-=dt;if(spawn<=0){spawn=.7;var isG=Math.random()<.65,e=document.createElement("span");e.className="item";
+      e.textContent=isG?good[Math.random()*good.length|0]:bad[Math.random()*bad.length|0];
+      var x=Math.random()*(W-40);e.style.left=x+"px";f.appendChild(e);items.push({e:e,x:x,y:-40,g:isG,v:130+Math.random()*90})}
+    items=items.filter(function(it){it.y+=it.v*dt;it.e.style.transform="translateY("+it.y+"px)";
+      var bxp=bx*(W-44);
+      if(it.y>H-62&&it.y<H-10&&it.x+30>bxp&&it.x<bxp+46){score=Math.max(0,score+(it.g?1:-1));$("g2s").textContent=score;it.e.remove();return false}
+      if(it.y>H){it.e.remove();return false}return true});
+    raf=requestAnimationFrame(frame)}
+  raf=requestAnimationFrame(function(n){last=n;frame(n)});
+  function hold(b,k){b.onpointerdown=function(){keys[k]=1};b.onpointerup=b.onpointerleave=b.onpointercancel=function(){keys[k]=0}}
+  hold($("bl"),"L");hold($("br"),"R");
+  function drag(e){var r=f.getBoundingClientRect();bx=Math.min(1,Math.max(0,(e.clientX-r.left-22)/(W-44)))}
+  f.onpointerdown=function(e){drag(e);f.setPointerCapture(e.pointerId)};f.onpointermove=function(e){if(e.buttons||e.pointerType==="touch")drag(e)}}
+
+/* Tantangan 3 */
+var Q=[
+["Apa manfaat utama berolahraga secara rutin?",["Tubuh jadi sehat dan bugar","Cepat mengantuk","Mudah lelah"],0],
+["Apa yang sebaiknya dilakukan sebelum berolahraga?",["Langsung berlari sekencangnya","Pemanasan","Makan banyak sekali"],1],
+["Minuman terbaik saat berolahraga adalah…",["Air putih","Minuman bersoda","Permen"],0],
+["Berapa lama anak dianjurkan aktif bergerak setiap hari?",["Sekitar 5 menit","Sekitar 1 jam","Tidak perlu"],1],
+["Setelah berolahraga, sebaiknya kita…",["Pendinginan dan istirahat","Tidur tanpa mandi","Lanjut main tanpa minum"],0]];
+function g3(){var i=0,ok=0;show("g3");
+  function ask(){var q=Q[i];$("g3bar").style.width=(i/Q.length*100)+"%";$("q").textContent=(i+1)+". "+q[0];$("fb").textContent="";$("nextq").style.display="none";
+    var o=$("opts");o.innerHTML="";
+    q[1].forEach(function(t,k){var b=document.createElement("button");b.className="btn alt opt";b.textContent=t;
+      b.onclick=function(){var all=o.querySelectorAll("button");all.forEach(function(x){x.disabled=true});
+        all[q[2]].classList.add("ok");if(k===q[2]){ok++;$("fb").textContent="Benar! 🎉"}else{b.classList.add("no");$("fb").textContent="Belum tepat. Jawaban benar ditandai hijau."}
+        $("nextq").textContent=i===Q.length-1?"Lihat hasil":"Lanjut";$("nextq").style.display="block"};o.appendChild(b)})}
+  $("nextq").onclick=function(){i++;if(i>=Q.length)finish(3,ok===5?3:ok>=3?2:1,"Kamu menjawab benar "+ok+" dari "+Q.length+" soal.");else ask()};
+  ask()}
+menu();
+})();
+</script>
+</body>
+</html>
